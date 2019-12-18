@@ -3,21 +3,14 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QGridLayout, QHBoxLayout
 from PyQt5.QtWidgets import QPushButton, QLabel
-from PyQt5.QtGui import  QPixmap
+from PyQt5.QtGui import QPixmap, QPalette, QColor
 from PyQt5.QtCore import *
-import time
 
 from player import Player
 from howtoplay import HowToPlay
 from nextMain import NextMain
 from coinMain import CoinMain
-
-# class Button(QToolButton):
-#     def __init__(self, text, callback):
-#         super().__init__()
-#         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-#         self.setText(text)
-#         self.clicked.connect(callback)
+from bustGame import BustGame, GameFinished
 
 class Main(QWidget):
     def __init__(self):
@@ -29,6 +22,10 @@ class Main(QWidget):
 
         self.nowPlay = ""
         self.who() #player선택
+
+        pal = QPalette()
+        pal.setColor(QPalette.Background, QColor(0, 0, 0))
+        self.setPalette(pal)
 
 #플레이어 선택
 
@@ -62,6 +59,10 @@ class Main(QWidget):
             self.playWindow.warn.setStyleSheet('color:red')
             self.playWindow.warn.setText("플레이어 이름을 비우거나 공백을 포함시킬 수 없습니다!")
             self.playWindow.newPlay.setText("")
+        elif self.playWindow.newPlay.text() in self.playerDic:
+            self.playWindow.warn.setStyleSheet('color:red')
+            self.playWindow.warn.setText("이미 존재하는 플레이어 입니다!")
+            self.playWindow.newPlay.setText("")
         else:
             self.playerDic[self.playWindow.newPlay.text()] = 100
             self.nowPlay = self.playWindow.newPlay.text()
@@ -82,7 +83,7 @@ class Main(QWidget):
         self.cimgLabel = QLabel()
         self.setMinimumHeight(95)
         self.setMinimumWidth(95)
-        pixmap = QPixmap('10656700518.5.20190611002904.jpg')
+        pixmap = QPixmap('coin.png')
         pixmap = pixmap.scaledToHeight(75)
         self.cimgLabel.setPixmap(pixmap)
 
@@ -91,7 +92,8 @@ class Main(QWidget):
         font = self.cLabel.font()
         font.setPointSize(font.pointSize() + 10)
         self.cLabel.setFont(font)
-        self.cLabel.setText(" X {} ".format(self.text))
+        self.cLabel.setStyleSheet('color:white')
+        self.cLabel.setText("X {} ".format(self.text))
 
         #main : grid / coint : coinBox/ button : buttonGrid
         self.grid = QGridLayout()
@@ -102,7 +104,8 @@ class Main(QWidget):
         self.coinBox.addWidget(self.cLabel)
 
         self.buttonGrid = QGridLayout()
-        self.grid.addLayout(self.coinBox, 0, 0)
+
+        self.grid.addLayout(self.coinBox, 0, 1)
         self.grid.addLayout(self.buttonGrid, 1, 0, 4, 0)
 
         self.buttonGrid.addWidget(self.howtoplayButton, 0, 0, 2, 2)
@@ -137,18 +140,33 @@ class Main(QWidget):
         if self.newWindow.coinHow < int(self.newWindow.coinLine.text()):
             self.newWindow.warn.setStyleSheet('color:red')
             self.newWindow.warn.setText("코인이 부족합니다!")
+            self.newWindow.coinLine.clear()
         else:
             self.text = self.newWindow.coinHow - int(self.newWindow.coinLine.text())
             self.newWindow.end_game()
-            self.cLabel.setText(" X {} ".format(self.text))
+            self.cLabel.setStyleSheet('color:white')
+            self.cLabel.setText("X {} ".format(self.text))
 
             #게임창으로 넘어가기
+            self.gameWindow = BustGame(self.newWindow.coinLine.text())
+
+        self.gameWindow.gamefinish.exitGame.clicked.connect(self.exitClicked)
+
+    def exitClicked(self):
+        self.text = int(self.gameWindow.gamefinish.getResult_Coin())
+        print(self.gameWindow.gamefinish.getResult_Coin())
+        print(self.text)
+        print(self.gameWindow.gamefinish.getResult())
+        self.gameWindow.gamefinish.exit()
+
+
 
 #광고 시청후 coin++
     def coin(self):
         self.otherWindow = CoinMain()
         self.text += self.otherWindow.c
-        self.cLabel.setText(" X {} ".format(self.text))
+        self.cLabel.setStyleSheet('color:white')
+        self.cLabel.setText("X {} ".format(self.text))
 
 #플레이어와 코인을 파일에 저장한 후 게임을 종료
     def end(self):
