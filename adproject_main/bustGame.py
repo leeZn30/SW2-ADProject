@@ -260,8 +260,6 @@ class GameFinished(QWidget):
 
         self.result = ""
 
-        self.gameFinished()
-
         self.newGame.clicked.connect(self.newGameClicked)
         #self.exitGame.clicked.connect(self.exitGameClicked)
 
@@ -270,6 +268,7 @@ class GameFinished(QWidget):
     def setResultCoin(self, result, coin):
         self.result = result
         self.coin = coin
+        self.gameFinished(self.result)
 
     def getResult_Coin(self):
         return self.result_coin
@@ -277,11 +276,11 @@ class GameFinished(QWidget):
     def get_Result(self):
         return self.result
 
-    def gameFinished(self):
+    def gameFinished(self, result):
         self.coin_state = QLabel(self)
         self.hbox2.addWidget(self.coin_state)
 
-        if self.result == "u_bust":
+        if result == "u_bust":
             self.result_lbl.setText("You're Bust!")
             self.result_lbl.setFont(QFont("times", 50))
             self.result_lbl.setStyleSheet("Color : black")
@@ -293,7 +292,7 @@ class GameFinished(QWidget):
             self.result_coin -= int(self.coin * 1.5)
             self.show()
 
-        elif self.result == "u_blackjack":
+        elif result == "u_blackjack":
             self.result_lbl.setText("You hit BlackJack!")
             self.result_lbl.setFont(QFont("times", 50))
             self.result_lbl.setStyleSheet("Color : black")
@@ -305,7 +304,7 @@ class GameFinished(QWidget):
             self.result_coin += int(self.coin * 1.5)
             self.show()
 
-        elif self.result == "push":
+        elif result == "push":
             self.result_lbl.setText("Push! Draw!")
             self.result_lbl.setFont(QFont("times", 50))
             self.result_lbl.setStyleSheet("Color : black")
@@ -317,7 +316,7 @@ class GameFinished(QWidget):
             self.result_coin = 0
             self.show()
 
-        elif self.result == "d_bust":
+        elif result == "d_bust":
             self.result_lbl.setText("Dealer is Bust!")
             self.result_lbl.setFont(QFont("times", 50))
             self.result_lbl.setStyleSheet("Color : black")
@@ -329,7 +328,7 @@ class GameFinished(QWidget):
             self.coin *= 2
             self.show()
 
-        elif self.result == "d_blackjack":
+        elif result == "d_blackjack":
             self.result_lbl.setText("Dealer hits BlackJack!")
             self.result_lbl.setFont(QFont("times", 50))
             self.result_lbl.setStyleSheet("Color : black")
@@ -341,7 +340,7 @@ class GameFinished(QWidget):
             self.result_coin -= int(self.coin * 1.5)
             self.show()
 
-        elif self.result == "d_win":
+        elif result == "d_win":
             self.result_lbl.setText("Dealer is closer to 21!")
             self.result_lbl.setFont(QFont("times", 50))
             self.result_lbl.setStyleSheet("Color : black")
@@ -353,7 +352,7 @@ class GameFinished(QWidget):
             self.result_coin -= int(self.coin * 1.5)
             self.show()
 
-        elif self.result == "u_win":
+        elif result == "u_win":
             self.result_lbl.setText("You are closer to 21!")
             self.result_lbl.setFont(QFont("times", 50))
             self.result_lbl.setStyleSheet("Color : black")

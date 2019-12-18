@@ -153,7 +153,7 @@ class Main(QWidget):
         self.gameWindow.gamefinish.exitGame.clicked.connect(self.exitClicked)
 
     def exitClicked(self):
-        self.text = int(self.gameWindow.gamefinish.getResult_Coin())
+        self.text += int(self.gameWindow.gamefinish.getResult_Coin())
         print(self.gameWindow.gamefinish.getResult_Coin())
         print(self.text)
         print(self.gameWindow.gamefinish.getResult())
