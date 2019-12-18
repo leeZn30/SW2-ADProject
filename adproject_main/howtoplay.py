@@ -1,22 +1,27 @@
 from PyQt5.QtWidgets import QLabel, QPushButton
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QPalette, QColor, QFont
 from PyQt5.QtWidgets import QWidget
 
 class HowToPlay(QWidget):
 
     def __init__(self):
         super().__init__()
+
+        pal = QPalette()
+        pal.setColor(QPalette.Background, QColor(0, 0, 0))
+        self.setPalette(pal)
+
         self.initUI()
 
     def initUI(self):
         self.grid = QGridLayout()
 
         self.playLabel = QLabel()
-        self.setMinimumHeight(650)
+        self.setMinimumHeight(404)
         self.setMinimumWidth(650)
-        pixmap = QPixmap('10656700518.5.20190611002904.jpg')
-        pixmap = pixmap.scaledToHeight(650)
+        pixmap = QPixmap('gamerule.png')
+        pixmap = pixmap.scaledToHeight(404)
         self.playLabel.setPixmap(pixmap)
 
         self.close_Btn = QPushButton("CLOSE")
@@ -28,7 +33,7 @@ class HowToPlay(QWidget):
 
         self.setLayout(self.grid)
         self.setWindowTitle('how To play Game?')
-        self.setGeometry(620, 170, 650, 650)
+        self.setGeometry(620, 170, 680, 650)
         self.show()
 
     def end_window(self):

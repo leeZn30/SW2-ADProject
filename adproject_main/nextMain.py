@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import *
-# from PyQt5.QtCore import QCoreApplication
 
 class NextMain(QWidget):
     def __init__(self, text):
@@ -31,20 +30,9 @@ class NextMain(QWidget):
         vbox.addLayout(vWidgetBox)
         vbox.addLayout(vWidgetBoxT)
         vbox.addWidget(self.warn)
-        #
-        # self.coinBtn.clicked.connect(self.next_game)
 
         self.setLayout(vbox)
         self.setWindowTitle('howCoin?')
         self.setGeometry(850, 300, 150, 150)
-    #
-    # def next_game(self):
-    #     if self.coinHow < int(self.coinLine.text()):
-    #         self.warn.setStyleSheet('color:red')
-    #         self.warn.setText("코인이 부족합니다!")
-    #     else:
-    #         self.coinResult = self.coinHow - int(self.coinLine.text())
-    #         self.end_game()
-
     def end_game(self):
         self.deleteLater()
