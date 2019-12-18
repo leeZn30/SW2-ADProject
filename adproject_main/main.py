@@ -79,6 +79,14 @@ class Main(QWidget):
         self.pluscoinButton = QPushButton('see adv to get COIN!')
         self.endButton = QPushButton('End Game')
 
+        #gamename image
+        self.gnimgLabel = QLabel()
+        self.setMinimumHeight(95)
+        self.setMinimumWidth(200)
+        pm = QPixmap('gamename.png')
+        pm = pm.scaledToHeight(95)
+        self.gnimgLabel.setPixmap(pm)
+
         #coin image
         self.cimgLabel = QLabel()
         self.setMinimumHeight(95)
@@ -98,8 +106,9 @@ class Main(QWidget):
         #main : grid / coint : coinBox/ button : buttonGrid
         self.grid = QGridLayout()
         self.coinBox = QHBoxLayout()
-        self.coinBox.addStretch(100)
 
+        self.coinBox.addWidget(self.gnimgLabel)
+        self.coinBox.addStretch(1)
         self.coinBox.addWidget(self.cimgLabel)
         self.coinBox.addWidget(self.cLabel)
 
@@ -137,7 +146,10 @@ class Main(QWidget):
 
 #코인을 차감하기 위한 button click callback함수
     def next_game(self):
-        if self.newWindow.coinHow < int(self.newWindow.coinLine.text()):
+        if int(self.newWindow.coinLine.text()) < 0:
+            self.newWindow.warn.setStyleSheet('color:red')
+            self.newWindow.warn.setText("게임진행불가 : 코인부족")
+        elif self.newWindow.coinHow < int(self.newWindow.coinLine.text()):
             self.newWindow.warn.setStyleSheet('color:red')
             self.newWindow.warn.setText("코인이 부족합니다!")
             self.newWindow.coinLine.clear()
@@ -150,16 +162,14 @@ class Main(QWidget):
             #게임창으로 넘어가기
             self.gameWindow = BustGame(self.newWindow.coinLine.text())
 
+        #exit버튼 눌렸을때 (게임결과창에서)
         self.gameWindow.gamefinish.exitGame.clicked.connect(self.exitClicked)
 
     def exitClicked(self):
         self.text += int(self.gameWindow.gamefinish.getResult_Coin())
-        print(self.gameWindow.gamefinish.getResult_Coin())
-        print(self.text)
-        print(self.gameWindow.gamefinish.getResult())
+        self.cLabel.setText("X {}".format(self.text))
         self.gameWindow.gamefinish.exit()
-
-
+        self.gameWindow.exit()
 
 #광고 시청후 coin++
     def coin(self):

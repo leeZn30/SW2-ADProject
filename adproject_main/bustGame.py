@@ -223,6 +223,9 @@ class BustGame(QWidget):
             self.gamefinish.setResultCoin("u_win", self.coin)
             self.hitButton.setDisabled(True)
 
+    def exit(self):
+        self.deleteLater()
+
 class GameFinished(QWidget):
 
     def __init__(self):
@@ -261,9 +264,6 @@ class GameFinished(QWidget):
         self.result = ""
 
         self.newGame.clicked.connect(self.newGameClicked)
-        #self.exitGame.clicked.connect(self.exitGameClicked)
-
-        self.show()
 
     def setResultCoin(self, result, coin):
         self.result = result
@@ -273,8 +273,6 @@ class GameFinished(QWidget):
     def getResult_Coin(self):
         return self.result_coin
 
-    def get_Result(self):
-        return self.result
 
     def gameFinished(self, result):
         self.coin_state = QLabel(self)
@@ -289,7 +287,7 @@ class GameFinished(QWidget):
             self.coin_state.setText("-" + str(int(self.coin * 1.5)))
             self.coin_state.setFont(QFont("times", 30))
             self.coin_state.setStyleSheet("Color : black")
-            self.result_coin -= int(self.coin * 1.5)
+            self.result_coin -= int(self.coin * 0.5)
             self.show()
 
         elif result == "u_blackjack":
@@ -301,7 +299,7 @@ class GameFinished(QWidget):
             self.coin_state.setFont(QFont("times", 30))
             self.coin_state.setStyleSheet("Color : black")
             self.coin *= 2
-            self.result_coin += int(self.coin * 1.5)
+            self.result_coin += int(self.coin * 0.5)
             self.show()
 
         elif result == "push":
@@ -324,7 +322,7 @@ class GameFinished(QWidget):
             self.coin_state.setText("+" + str(int(self.coin * 1.5)))
             self.coin_state.setFont(QFont("times", 30))
             self.coin_state.setStyleSheet("Color : black")
-            self.result_coin += int(self.coin * 1.5)
+            self.result_coin += int(self.coin * 0.5)
             self.coin *= 2
             self.show()
 
@@ -337,7 +335,7 @@ class GameFinished(QWidget):
             self.coin_state.setText("-" + str(int(self.coin * 1.5)))
             self.coin_state.setFont(QFont("times", 30))
             self.coin_state.setStyleSheet("Color : black")
-            self.result_coin -= int(self.coin * 1.5)
+            self.result_coin -= int(self.coin * 0.5)
             self.show()
 
         elif result == "d_win":
@@ -349,7 +347,7 @@ class GameFinished(QWidget):
             self.coin_state.setText("-" + str(int(self.coin * 1.5)))
             self.coin_state.setFont(QFont("times", 30))
             self.coin_state.setStyleSheet("Color : black")
-            self.result_coin -= int(self.coin * 1.5)
+            self.result_coin -= int(self.coin * 0.5)
             self.show()
 
         elif result == "u_win":
@@ -360,7 +358,7 @@ class GameFinished(QWidget):
             self.coin_state.setText("+" + str(int(self.coin * 1.5)))
             self.coin_state.setFont(QFont("times", 30))
             self.coin_state.setStyleSheet("Color : black")
-            self.result_coin += int(self.coin * 1.5)
+            self.result_coin += int(self.coin * 0.5)
             self.coin *= 2
             self.show()
 
