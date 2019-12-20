@@ -10,7 +10,7 @@ from player import Player
 from howtoplay import HowToPlay
 from nextMain import NextMain
 from coinMain import CoinMain
-from bustGame import BustGame, GameFinished
+from blackjackgame import BlackjackGame, GameFinished
 
 class Main(QWidget):
     def __init__(self):
@@ -31,8 +31,8 @@ class Main(QWidget):
 
     def who(self):
         for player_str in self.s:
-            self.l = player_str.split()
-            self.playerDic[self.l[0]] = int(self.l[1])
+            self.s = player_str.split()
+            self.playerDic[self.s[0]] = int(self.s[1])
 
         self.playWindow = Player(self.playerDic)
         self.playWindow.show()
@@ -169,7 +169,7 @@ class Main(QWidget):
             self.cLabel.setText("X {} ".format(self.text))
 
             #게임창으로 넘어가기
-            self.gameWindow = BustGame(self.newWindow.coinLine.text())
+            self.gameWindow = BlackjackGame(self.newWindow.coinLine.text())
 
         #exit버튼 눌렸을때 (게임결과창에서)
             self.gameWindow.gamefinish.exitGame.clicked.connect(self.exitClicked)

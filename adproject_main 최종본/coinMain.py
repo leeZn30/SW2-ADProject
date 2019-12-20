@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
-import pytube
-import cv2
+# import pytube
+# import cv2
 from PyQt5.QtCore import QCoreApplication
 
 class CoinMain(QWidget):
