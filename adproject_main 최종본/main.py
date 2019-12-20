@@ -31,8 +31,8 @@ class Main(QWidget):
 
     def who(self):
         for player_str in self.s:
-            self.s = player_str.split()
-            self.playerDic[self.s[0]] = int(self.s[1])
+            self.l = player_str.split()
+            self.playerDic[self.l[0]] = int(self.l[1])
 
         self.playWindow = Player(self.playerDic)
         self.playWindow.show()
@@ -146,13 +146,24 @@ class Main(QWidget):
 
 #코인을 차감하기 위한 button click callback함수
     def next_game(self):
-        if int(self.newWindow.coinHow) < int(self.newWindow.coinLine.text()):
+        if self.newWindow.coinLine.text() == "":
+            self.newWindow.warn.setStyleSheet('color:red')
+            self.newWindow.warn.setText("값을 입력해 주세요!")
+            self.newWindow.coinLine.clear()
+        elif int(self.text) < int(self.newWindow.coinLine.text()):
             self.newWindow.warn.setStyleSheet('color:red')
             self.newWindow.warn.setText("코인이 부족합니다!")
             self.newWindow.coinLine.clear()
-
+        elif not self.newWindow.coinLine.text().isdigit():
+            self.newWindow.warn.setStyleSheet('color:red')
+            self.newWindow.warn.setText("숫자만 입력해 주세요!")
+            self.newWindow.coinLine.clear()
+        elif int(self.newWindow.coinLine.text()) < 0 :
+            self.newWindow.warn.setStyleSheet('color:red')
+            self.newWindow.warn.setText("코인이 부족합니다!")
+            self.newWindow.coinLine.clear()
         else:
-            self.text = self.newWindow.coinHow - int(self.newWindow.coinLine.text())
+            self.text -= int(self.newWindow.coinLine.text())
             self.newWindow.end_game()
             self.cLabel.setStyleSheet('color:white')
             self.cLabel.setText("X {} ".format(self.text))
@@ -179,16 +190,11 @@ class Main(QWidget):
 #플레이어와 코인을 파일에 저장한 후 게임을 종료
     def end(self):
         self.p = open("player.txt", "w")
-        if self.nowPlay == "":
-            for dic_py in self.playerDic:
-                self.p.write(dic_py + " " + str(self.playerDic[dic_py]) + "\n")
-
-        else:
-            for each in self.playerDic:
-                if each == self.nowPlay:
-                    self.p.write(self.nowPlay + " " + str(self.text) + "\n")
-                else:
-                    self.p.write(each + " " + str(self.playerDic[each]) + "\n")
+        for each in self.playerDic:
+            if each == self.nowPlay:
+                self.p.write(self.nowPlay + " " + str(self.text) + "\n")
+            else:
+                self.p.write(each + " " + str(self.playerDic[each]) + "\n")
         QCoreApplication.quit()
 
 if __name__ == '__main__':

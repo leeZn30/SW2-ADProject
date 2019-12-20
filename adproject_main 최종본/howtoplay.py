@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QLabel, QPushButton
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtGui import QPixmap, QPalette, QColor, QFont
+from PyQt5.QtGui import QPixmap, QPalette, QColor
 from PyQt5.QtWidgets import QWidget
 
 class HowToPlay(QWidget):

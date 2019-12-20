@@ -1,13 +1,12 @@
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QPushButton, QTextEdit, QLineEdit, QLabel
-from PyQt5.QtGui import QPixmap, QPalette, QColor
+from PyQt5.QtGui import QPalette, QColor
 
 class Player(QWidget):
     def __init__(self, dic):
         super().__init__()
         self.play = dic
-        self.img = QLabel()
 
         pal = QPalette()
         pal.setColor(QPalette.Background, QColor(0, 0, 0))
@@ -28,12 +27,6 @@ class Player(QWidget):
             pass
 
         self.list.setReadOnly(True)
-
-        self.setMinimumHeight(250)
-        self.setMinimumWidth(700)
-        pixmap = QPixmap('gamerule.png')
-        pixmap = pixmap.scaledToHeight(700)
-        self.img.setPixmap(pixmap)
 
         self.choose = QLineEdit()
         self.chBtn = QPushButton("choose")
