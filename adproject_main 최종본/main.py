@@ -31,8 +31,8 @@ class Main(QWidget):
 
     def who(self):
         for player_str in self.s:
-            self.s = player_str.split()
-            self.playerDic[self.s[0]] = int(self.s[1])
+            self.l = player_str.split()
+            self.playerDic[self.l[0]] = int(self.l[1])
 
         self.playWindow = Player(self.playerDic)
         self.playWindow.show()
