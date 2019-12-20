@@ -109,7 +109,6 @@ class BlackjackGame(QWidget):
         u_lbl.setPixmap(u_card)
         self.u_previous = self.u_previous + self.interval
         self.user_sum = sum(self.user)
-        self.user_to_21 = 21 - self.user_sum
         if self.user_sum > 21:
             self.hitButton.setDisabled(True)
 
@@ -122,7 +121,6 @@ class BlackjackGame(QWidget):
         self.hitButton.setDisabled(True)
 
         self.dealer_sum = sum(self.dealer)
-        self.dealer_to_21 = 21 - self.dealer_sum
 
         self.dealer_card = random.sample(self.first_dealerCardList, 1)[0]
         self.dealer.append(self.dealerCardDic[self.dealer_card])
