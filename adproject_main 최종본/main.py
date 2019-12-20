@@ -146,7 +146,19 @@ class Main(QWidget):
 
 #코인을 차감하기 위한 button click callback함수
     def next_game(self):
-        if int(self.newWindow.coinHow) < int(self.newWindow.coinLine.text()):
+        if self.newWindow.coinLine.text() == "":
+            self.newWindow.warn.setStyleSheet('color:red')
+            self.newWindow.warn.setText("값을 입력해 주세요!")
+            self.newWindow.coinLine.clear()
+        elif int(self.text) < int(self.newWindow.coinLine.text()):
+            self.newWindow.warn.setStyleSheet('color:red')
+            self.newWindow.warn.setText("코인이 부족합니다!")
+            self.newWindow.coinLine.clear()
+        elif not self.newWindow.coinLine.text().isdigit():
+            self.newWindow.warn.setStyleSheet('color:red')
+            self.newWindow.warn.setText("숫자만 입력해 주세요!")
+            self.newWindow.coinLine.clear()
+        elif int(self.newWindow.coinLine.text()) < 0 :
             self.newWindow.warn.setStyleSheet('color:red')
             self.newWindow.warn.setText("코인이 부족합니다!")
             self.newWindow.coinLine.clear()
